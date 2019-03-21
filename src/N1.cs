@@ -8,8 +8,7 @@
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct N1<T> : Numeral<T>
-        where T: unmanaged {
+    public struct N1<T> : Numeral<T> where T: unmanaged {
         public int Num {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => 1;
