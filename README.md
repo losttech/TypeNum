@@ -14,6 +14,13 @@ class Tensor<NCols, NRows>
     public static int RowCount { get; } = default(NRows).Num;
 
     internal readonly float[,] values = new float[ColumnCount, RowCount];
+
+    public void Add(Tensor<NCols, NRows> tensor)
+    {
+        for (int col = 0; col < ColumnCount; col++)
+            for (int row = 0; row < RowCount; row++)
+                this.values[col, row] += tensor.values[col, row];
+    }
 }
 ```
 
