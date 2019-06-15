@@ -2,7 +2,12 @@
     using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
 
-    public class Sum<T1, T2> where T1 : Numeral where T2: Numeral {}
+    public struct Sum<T1, T2> : Numeral where T1 : struct, Numeral where T2 : struct, Numeral
+    {
+        static readonly int num = checked(default(T1).Num + default(T2).Num);
+
+        public int Num => num;
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     public class Sum<T, T1, T2>: Numeral<T>
