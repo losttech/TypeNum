@@ -7,9 +7,14 @@ Type-level integers for C#
 # Example
 ```csharp
 class Tensor<NCols, NRows>
-    where NCols : unmanaged, Numeral
-    where NRows : unmanaged, Numeral
-{ ... }
+    where NCols : struct, Numeral
+    where NRows : struct, Numeral
+{
+    public static int ColumnCount { get; } = default(NCols).Num;
+    public static int RowCount { get; } = default(NRows).Num;
+
+    internal readonly float[,] values = new float[ColumnCount, RowCount];
+}
 ```
 
 # Consistency
