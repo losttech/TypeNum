@@ -36,6 +36,7 @@ using N39 = TypeNum.Sum<TypeNum.Sum<TypeNum.Sum<
 
 ...
 
+Debug.Assert(default(N39).Num == 39);
 var thirtyNine = new Tensor<N39, N39>();
 ```
 

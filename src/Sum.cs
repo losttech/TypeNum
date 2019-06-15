@@ -12,8 +12,10 @@
         static Sum()
         {
             int n2 = default(T2).Num;
-            if (default(T1).Num <= n2)
-                throw new ArgumentException("Consistency: T1 must always be > T2. Swap them.");
+            int n1 = default(T1).Num;
+            if (n1 <= n2)
+                throw new ArgumentException("Consistency: T1 must always be > T2. Swap them."
+                    + $"\n{typeof(Sum<T1, T2>).Name}: {typeof(T1).Name}={n1},{typeof(T2).Name}={n2}");
             var t1 = typeof(T1);
             var t2 = typeof(T2);
             if (t2.IsConstructedGenericType && t2.GetGenericTypeDefinition() == typeof(Sum<,>))
