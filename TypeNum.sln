@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo", "Repo", "{44BFD517-B
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{058BAD21-D662-4697-B2F5-AE49D50D2D90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tensors", "samples\Tensors\Tensors.csproj", "{700CD753-222E-4F6C-BECD-230E49A56F23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,9 +34,16 @@ Global
 		{DAB4E441-7F95-4870-848C-925D1F1245F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAB4E441-7F95-4870-848C-925D1F1245F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAB4E441-7F95-4870-848C-925D1F1245F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{700CD753-222E-4F6C-BECD-230E49A56F23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{700CD753-222E-4F6C-BECD-230E49A56F23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{700CD753-222E-4F6C-BECD-230E49A56F23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{700CD753-222E-4F6C-BECD-230E49A56F23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{700CD753-222E-4F6C-BECD-230E49A56F23} = {058BAD21-D662-4697-B2F5-AE49D50D2D90}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AF6A4D21-03BB-4811-86F3-3802AD5B526C}
