@@ -24,6 +24,21 @@ class Tensor<NCols, NRows>
 }
 ```
 
+## Shorthands
+For non-power-of-two numerals it is useful to add shorthands.
+Unfortunately declaring one is rather verbose in C#:
+```csharp
+using N39 = TypeNum.Sum<TypeNum.Sum<TypeNum.Sum<
+			TypeNum.N32,
+			TypeNum.N4>,
+			TypeNum.N2>,
+			TypeNum.N1>;
+
+...
+
+var thirtyNine = new Tensor<N39, N39>();
+```
+
 # Consistency
 Technically, `Sum<N1, N0>` and `Sum<N0, N1>` represent the same numeral.
 However, there is no way to express it in C# type system. To alleviate that

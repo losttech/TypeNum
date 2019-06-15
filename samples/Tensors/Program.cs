@@ -1,6 +1,11 @@
 ﻿namespace Tensors
 {
     using TypeNum;
+    using N39 = TypeNum.Sum<TypeNum.Sum<TypeNum.Sum<
+        TypeNum.N32,
+        TypeNum.N4>,
+        TypeNum.N2>,
+        TypeNum.N1>;
     class Program
     {
         static void Main(string[] args)
@@ -28,6 +33,8 @@
             // error CS0411: The type arguments for method 
             // 'Tensor<N2, N2>.Mul<NOtherRows>(Tensor<N2, NOtherRows>, MutableTensor<N2, NOtherRows>)'
             // cannot be inferred from the usage. Try specifying the type arguments explicitly.
+
+            var thirtyNine = new Tensor<N39, N39>();
         }
     }
 }
