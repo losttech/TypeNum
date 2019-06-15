@@ -14,6 +14,12 @@ variables:
 
 steps:
 - task: UseDotNet@2
+  displayName: 'Install .NET Core 2.x SDK'
+  inputs:
+    packageType: 'runtime'
+    version: '2.x'
+
+- task: UseDotNet@2
   displayName: 'Use .NET Core 3.0 SDK'
   inputs:
     packageType: 'sdk'
