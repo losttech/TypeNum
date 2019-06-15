@@ -8,14 +8,14 @@
         public void NumsAreCorrect() {
             int num = default(N4096<int>).Num;
 
-            Assert.Equal(expected: 4096, num);
+            Assert.Equal(expected: PowersOfTwo.Max, num);
         }
 
         [Fact]
         public unsafe void SizesAreCorrect() {
             int size = sizeof(N4096<byte>);
 
-            Assert.Equal(expected: 4096, size);
+            Assert.Equal(expected: PowersOfTwo.Max, size);
         }
 
         [Fact]
@@ -24,7 +24,7 @@
             var numerals = Enumerable.Range(1, int.MaxValue)
                 .Select(i => 1 << i)
                 .Prepend(0)
-                .TakeWhile(n => n <= 4096);
+                .TakeWhile(n => n <= PowersOfTwo.Max);
             foreach(int n in numerals)
             {
                 string typeName = Invariant($"{ns}.N{n}");

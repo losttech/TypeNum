@@ -1,4 +1,5 @@
 ﻿namespace TypeNum {
+    using System;
     using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
 
@@ -7,6 +8,23 @@
         static readonly int num = checked(default(T1).Num + default(T2).Num);
 
         public int Num => num;
+
+        static Sum()
+        {
+            int n2 = default(T2).Num;
+            if (default(T1).Num <= n2)
+                throw new ArgumentException("Consistency: T1 must always be > T2. Swap them.");
+            var t1 = typeof(T1);
+            var t2 = typeof(T2);
+            if (t2.IsConstructedGenericType && t2.GetGenericTypeDefinition() == typeof(Sum<,>))
+                throw new ArgumentException("Consistency: T2 must not be another Sum<X,Y>. Instead use Sum<Sum<T1, X>, Y>");
+            if (t1.IsConstructedGenericType && t1.GetGenericTypeDefinition() == typeof(Sum<,>))
+            {
+                foreach (var part in t1.GenericTypeArguments)
+                    if (((Numeral)Activator.CreateInstance(part)).Num <= n2)
+                        throw new ArgumentException("Consistency: in Sum<Sum<A, B>, C> A and B must each be > C");
+            }
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]

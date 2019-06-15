@@ -121,4 +121,9 @@
             get => 4096;
         }
     }
+
+    public static class PowersOfTwo
+    {
+        public static int Max = 4096;
+    }
 }
