@@ -27,7 +27,7 @@ steps:
   displayName: 'Test'
   inputs:
     command: 'test'
-    arguments: '--configuraion $(buildConfiguration)'
+    arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: 'Pack'
