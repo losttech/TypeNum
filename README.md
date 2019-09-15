@@ -69,3 +69,25 @@ each be strictly greater (>) than `C`
 
 Following these rules will ensure, that equal type numerals are always
 represented by identical types.
+
+# F# Example
+In F# (unlike C#) operators can introduce new generic type parameters,
+which enables defining statically-typed matrix multiplication as an operator:
+
+```fsharp
+type Matrix<'rows, 'cols>() =
+    static member ( * )(left: Matrix<'rows, 'cols>, right: Matrix<'cols, 'ncols>) =
+        Matrix<'rows, 'ncols>()
+
+module private Test =
+    open TypeNum
+
+    type N3 = Sum<N2, N1>
+    type N7 = Sum<N4, N3>
+    type N5 = Sum<N4, N1>
+
+    let a = Matrix<N7, N5>()
+    let b = Matrix<N5, N3>()
+    let product = a * b
+
+```
