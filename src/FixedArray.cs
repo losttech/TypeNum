@@ -86,4 +86,15 @@
             ElementCount = default(TSize).Num;
         }
     }
+
+    public static class FixedArray {
+        public static FixedArray<N1<T>, T> A<T>(T item0) where T: unmanaged
+            => new FixedArray<N1<T>, T> { [0] = item0 };
+        public static FixedArray<N2<T>, T> A<T>(T item0, T item1) where T : unmanaged
+            => new FixedArray<N2<T>, T> { [0] = item0, [1] = item1 };
+        public static FixedArray<Sum<T, N2<T>, N1<T>>, T> A<T>(T item0, T item1, T item2) where T : unmanaged
+            => new FixedArray<Sum<T, N2<T>, N1<T>>, T> { [0] = item0, [1] = item1, [2] = item2 };
+        public static FixedArray<N4<T>, T> A<T>(T item0, T item1, T item2, T item3) where T : unmanaged
+            => new FixedArray<N4<T>, T> { [0] = item0, [1] = item1, [2] = item2, [3] = item3 };
+    }
 }
