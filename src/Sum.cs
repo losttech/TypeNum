@@ -30,7 +30,7 @@
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public class Sum<T, T1, T2>: Numeral<T>
+    public struct Sum<T, T1, T2>: Numeral<T>
         where T1 : struct, Numeral<T>
         where T2 : struct, Numeral<T>
     {
