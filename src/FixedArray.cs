@@ -27,17 +27,34 @@
         public unsafe T this[int index] {
             get {
                 CheckIndex(index);
-                fixed (TSize* self = &this.value) {
-                    var data = (T*)self;
-                    return data[index];
-                }
+                return this.UnsafeRef(index);
             }
             set {
                 CheckIndex(index);
-                fixed (TSize* self = &this.value) {
-                    var data = (T*)self;
-                    data[index] = value;
-                }
+                this.UnsafeRef(index) = value;
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public unsafe ref T UnsafeRef(int index) {
+            fixed (TSize* self = &this.value) {
+                var data = (T*)self;
+                return ref data[index];
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public unsafe T UnsafeGet(int index) {
+            fixed (TSize* self = &this.value) {
+                var data = (T*)self;
+                return data[index];
+            }
+        }
+
+        public unsafe void UnsafeSet(int index, T value) {
+            fixed (TSize* self = &this.value) {
+                var data = (T*)self;
+                data[index] = value;
             }
         }
 
