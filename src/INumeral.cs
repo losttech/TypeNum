@@ -4,8 +4,7 @@
         int Num { get; }
     }
 
-    public interface INumeral<T> {
-        int Num { get; }
+    public interface INumeral<T>: INumeral {
     }
 
     public static class Numeral<T> where T : unmanaged {
@@ -18,7 +17,9 @@
             while (n >= pwr) {
                 if ((n & pwr) == pwr) {
                     var powerOfTwo = PowersOfTwo<T>.Get(pwr);
-                    result = typeof(Sum<,,>).MakeGenericType(typeof(T), powerOfTwo, result);
+                    result = result == typeof(N0<T>)
+                        ? powerOfTwo
+                        : typeof(Sum<,,>).MakeGenericType(typeof(T), powerOfTwo, result);
                 }
 
                 pwr <<= 1;

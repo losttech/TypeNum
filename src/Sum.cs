@@ -16,6 +16,9 @@
             if (n1 <= n2)
                 throw new ArgumentException("Consistency: T1 must always be > T2. Swap them."
                     + $"\n{typeof(Sum<T1, T2>).Name}: {typeof(T1).Name}={n1},{typeof(T2).Name}={n2}");
+            if (n1 == 0 || n2 == 0)
+                throw new ArgumentException("Consistency: T1 and T2 must always be > 0."
+                    + $"\n{typeof(Sum<T1, T2>).Name}: {typeof(T1).Name}={n1},{typeof(T2).Name}={n2}");
             var t1 = typeof(T1);
             var t2 = typeof(T2);
             if (t2.IsConstructedGenericType && t2.GetGenericTypeDefinition() == typeof(Sum<,>))
@@ -40,6 +43,10 @@
         public int Num {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => this.Item1.Num + this.Item2.Num;
+        }
+
+        static Sum() {
+            default(Sum<T1, T2>).Num.GetHashCode();
         }
     }
 }
