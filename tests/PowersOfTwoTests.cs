@@ -1,4 +1,4 @@
-﻿namespace TypeNum.Tests {
+﻿namespace TypeNum {
     using System;
     using System.Linq;
     using Xunit;

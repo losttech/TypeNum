@@ -1,4 +1,4 @@
-namespace TypeNum.Tests {
+namespace TypeNum {
     using System;
     using Xunit;
     using ArrayOfTwoInts = FixedArray<Twice<N1<int>, int>, int>;

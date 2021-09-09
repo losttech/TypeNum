@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <LangVersion>9.0</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RootNamespace>TypeNum</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
