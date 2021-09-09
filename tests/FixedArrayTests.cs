@@ -39,5 +39,18 @@ namespace TypeNum.Tests {
             Assert.Contains(2, array);
             Assert.DoesNotContain(3, array);
         }
+
+        [Fact]
+        public void ToFixedArray() {
+            int[] netArray = new[] { 1, 2, 3, 4, 5 };
+            var array = netArray.ToFixedArray();
+            Assert.Equal(netArray, array);
+        }
+
+        [Fact]
+        public void ToFixedArray_TooLarge() {
+            int[] netArray = new int[PowersOfTwo.Max + 1];
+            Assert.Throws<NotImplementedException>(() => netArray.ToFixedArray());
+        }
     }
 }

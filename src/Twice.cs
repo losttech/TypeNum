@@ -3,8 +3,8 @@
     using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
 
-    public struct Twice<T>: Numeral
-        where T: struct, Numeral
+    public struct Twice<T>: INumeral
+        where T: struct, INumeral
     {
         static readonly int num = checked(default(T).Num * 2);
 
@@ -19,8 +19,8 @@
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct Twice<TNum, T> : Numeral<T>
-        where TNum: unmanaged, Numeral<T>
+    public struct Twice<TNum, T> : INumeral<T>
+        where TNum: unmanaged, INumeral<T>
     {
         public TNum Item1;
         public TNum Item2;

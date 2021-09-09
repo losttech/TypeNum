@@ -3,7 +3,7 @@
     using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
 
-    public struct Sum<T1, T2> : Numeral where T1 : struct, Numeral where T2 : struct, Numeral
+    public struct Sum<T1, T2> : INumeral where T1 : struct, INumeral where T2 : struct, INumeral
     {
         static readonly int num = checked(default(T1).Num + default(T2).Num);
 
@@ -23,16 +23,16 @@
             if (t1.IsConstructedGenericType && t1.GetGenericTypeDefinition() == typeof(Sum<,>))
             {
                 foreach (var part in t1.GenericTypeArguments)
-                    if (((Numeral)Activator.CreateInstance(part)).Num <= n2)
+                    if (((INumeral)Activator.CreateInstance(part)).Num <= n2)
                         throw new ArgumentException("Consistency: in Sum<Sum<A, B>, C> A and B must each be > C");
             }
         }
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct Sum<T, T1, T2>: Numeral<T>
-        where T1 : struct, Numeral<T>
-        where T2 : struct, Numeral<T>
+    public struct Sum<T, T1, T2>: INumeral<T>
+        where T1 : struct, INumeral<T>
+        where T2 : struct, INumeral<T>
     {
         public T1 Item1;
         public T2 Item2;

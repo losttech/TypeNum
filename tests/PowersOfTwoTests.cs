@@ -29,7 +29,7 @@
             {
                 string typeName = Invariant($"{ns}.N{n}");
                 var numeral = typeof(N0).Assembly.GetType(typeName);
-                var instance = (Numeral)Activator.CreateInstance(numeral);
+                var instance = (INumeral)Activator.CreateInstance(numeral);
                 Assert.Equal(instance.Num, n);
             }
         }

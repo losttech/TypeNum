@@ -3,8 +3,8 @@
     using TypeNum;
 
     class MutableTensor<NCols, NRows>: Tensor<NCols, NRows>
-        where NCols : unmanaged, Numeral
-        where NRows : unmanaged, Numeral
+        where NCols : unmanaged, INumeral
+        where NRows : unmanaged, INumeral
     {
         public void Add(MutableTensor<NCols, NRows> tensor)
         {

@@ -6,16 +6,17 @@
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct FixedArray<TSize, T>: IList<T>
-        where TSize: unmanaged, Numeral<T>
-        where T: unmanaged
-    {
+    public struct FixedArray<TSize, T> : IList<T>
+        where TSize : unmanaged, INumeral<T>
+        where T : unmanaged {
         public static int ElementCount {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get;
         }
 
+#pragma warning disable IDE0044 // Add readonly modifier. The field is modified via pointers.
         TSize value;
+#pragma warning restore IDE0044 // Add readonly modifier
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void CheckIndex(int index) {
@@ -27,14 +28,14 @@
             get {
                 CheckIndex(index);
                 fixed (TSize* self = &this.value) {
-                    T* data = (T*)self;
+                    var data = (T*)self;
                     return data[index];
                 }
             }
             set {
                 CheckIndex(index);
                 fixed (TSize* self = &this.value) {
-                    T* data = (T*)self;
+                    var data = (T*)self;
                     data[index] = value;
                 }
             }
@@ -52,7 +53,7 @@
             if (array == null) throw new ArgumentNullException(nameof(array));
             if (targetIndex < 0 || (long)targetIndex + ElementCount > array.Length)
                 throw new ArgumentOutOfRangeException(paramName: nameof(targetIndex));
-            fixed(T* dest = array)
+            fixed (T* dest = array)
             fixed (TSize* self = &this.value)
                 Buffer.MemoryCopy(source: self, dest + targetIndex, array.Length - targetIndex, ElementCount);
         }
@@ -63,7 +64,7 @@
         }
         public unsafe int IndexOf(T item) {
             fixed (TSize* self = &this.value) {
-                T* data = (T*)self;
+                var data = (T*)self;
                 for (int i = 0; i < ElementCount; i++)
                     if (object.Equals(data[i], item))
                         return i;
@@ -87,14 +88,44 @@
         }
     }
 
+    public static class FixedArray<T> where T : unmanaged {
+        public static Type GetType(int elementCount) {
+            if (elementCount < 0) throw new ArgumentOutOfRangeException(nameof(elementCount));
+            var numeral = Numeral<T>.GetNType(elementCount);
+            return typeof(FixedArray<,>).MakeGenericType(numeral, typeof(T));
+        }
+    }
+
     public static class FixedArray {
-        public static FixedArray<N1<T>, T> A<T>(T item0) where T: unmanaged
-            => new FixedArray<N1<T>, T> { [0] = item0 };
+        public static FixedArray<N1<T>, T> A<T>(T item0) where T : unmanaged
+            => new() { [0] = item0 };
         public static FixedArray<N2<T>, T> A<T>(T item0, T item1) where T : unmanaged
-            => new FixedArray<N2<T>, T> { [0] = item0, [1] = item1 };
+            => new() { [0] = item0, [1] = item1 };
         public static FixedArray<Sum<T, N2<T>, N1<T>>, T> A<T>(T item0, T item1, T item2) where T : unmanaged
-            => new FixedArray<Sum<T, N2<T>, N1<T>>, T> { [0] = item0, [1] = item1, [2] = item2 };
+            => new() { [0] = item0, [1] = item1, [2] = item2 };
         public static FixedArray<N4<T>, T> A<T>(T item0, T item1, T item2, T item3) where T : unmanaged
-            => new FixedArray<N4<T>, T> { [0] = item0, [1] = item1, [2] = item2, [3] = item3 };
+            => new() { [0] = item0, [1] = item1, [2] = item2, [3] = item3 };
+
+        public static unsafe IList<T> ToFixedArray<T>(this ICollection<T> collection) where T : unmanaged {
+            if (collection is null) throw new ArgumentNullException(nameof(collection));
+
+            int len = collection.Count;
+            var type = FixedArray<T>.GetType(len);
+            object result = Activator.CreateInstance(type);
+            var box = GCHandle.Alloc(result, GCHandleType.Pinned);
+            var data = (T*)box.AddrOfPinnedObject();
+
+            try {
+                using IEnumerator<T> enumerator = collection.GetEnumerator();
+                for (int i = 0; i < len; i++) {
+                    if (!enumerator.MoveNext()) throw new ArgumentException("Bad collection enumerator");
+                    data[i] = enumerator.Current;
+                }
+            } finally {
+                box.Free();
+            }
+
+            return (IList<T>)result;
+        }
     }
 }
