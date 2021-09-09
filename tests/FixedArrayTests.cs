@@ -48,6 +48,13 @@ namespace TypeNum {
         }
 
         [Fact]
+        public void ToFixedBoolArray() {
+            bool[] netArrray = new[] { false, true, true };
+            var array = netArrray.ToFixedArray();
+            Assert.Equal(netArrray, array);
+        }
+
+        [Fact]
         public void ToFixedArray_TooLarge() {
             int[] netArray = new int[PowersOfTwo.Max + 1];
             Assert.Throws<NotImplementedException>(() => netArray.ToFixedArray());

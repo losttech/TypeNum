@@ -128,8 +128,20 @@
 
             int len = collection.Count;
             var type = FixedArray<T>.GetType(len);
-            object result = Activator.CreateInstance(type);
-            var box = GCHandle.Alloc(result, GCHandleType.Pinned);
+            var result = (IList<T>)Activator.CreateInstance(type);
+
+            GCHandle box;
+            try {
+                box = GCHandle.Alloc(result, GCHandleType.Pinned);
+            } catch (ArgumentException) {
+                // workaround for bool and char not being pinnable
+                using IEnumerator<T> enumerator = collection.GetEnumerator();
+                for (int i = 0; i < len; i++) {
+                    if (!enumerator.MoveNext()) throw new ArgumentException("Bad collection enumerator");
+                    result[i] = enumerator.Current;
+                }
+                return result;
+            }
             var data = (T*)box.AddrOfPinnedObject();
 
             try {
