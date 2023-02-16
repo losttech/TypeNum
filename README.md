@@ -7,11 +7,11 @@ Type-level integers for C#
 # Example
 ```csharp
 class Tensor<NCols, NRows>
-    where NCols : struct, Numeral
-    where NRows : struct, Numeral
+    where NCols : struct, INumeral
+    where NRows : struct, INumeral
 {
-    public static int ColumnCount { get; } = default(NCols).Num;
-    public static int RowCount { get; } = default(NRows).Num;
+    public static int ColumnCount { get; } = NCols.Num;
+    public static int RowCount { get; } = NRows.Num;
 
     internal readonly float[,] values = new float[ColumnCount, RowCount];
 
@@ -36,7 +36,7 @@ using N39 = TypeNum.Sum<TypeNum.Sum<TypeNum.Sum<
 
 ...
 
-Debug.Assert(default(N39).Num == 39);
+Debug.Assert(N39.Num == 39);
 var thirtyNine = new Tensor<N39, N39>();
 ```
 
