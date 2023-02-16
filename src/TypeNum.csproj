@@ -12,7 +12,7 @@
     <PackageProjectUrl>https://github.com/losttech/TypeNum</PackageProjectUrl>
     <RepositoryUrl>https://github.com/losttech/TypeNum.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>0.3.0</Version>
+    <VersionPrefix>0.3.0</VersionPrefix>
 
     <!-- The following is recommended for public projects -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>

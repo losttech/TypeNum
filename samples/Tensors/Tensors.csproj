@@ -4,6 +4,8 @@
     <OutputType>Exe</OutputType>
     <LangVersion>11.0</LangVersion>
     <TargetFramework>net7.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
