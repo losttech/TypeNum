@@ -8,6 +8,7 @@
 
     <Authors>Lost Tech</Authors>
     <Description>Type-level integers for C#/.NET</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/losttech/TypeNum</PackageProjectUrl>
     <RepositoryUrl>https://github.com/losttech/TypeNum.git</RepositoryUrl>
@@ -33,6 +34,10 @@
 
   <ItemGroup>
     <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\README.md">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
