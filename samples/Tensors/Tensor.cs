@@ -7,8 +7,8 @@
         where NCols : unmanaged, INumeral
         where NRows : unmanaged, INumeral
     {
-        public static int ColumnCount { get; } = default(NCols).Num;
-        public static int RowCount { get; } = default(NRows).Num;
+        public static int ColumnCount { get; } = NCols.Num;
+        public static int RowCount { get; } = NRows.Num;
 
         internal readonly float[,] values = new float[ColumnCount, RowCount];
 

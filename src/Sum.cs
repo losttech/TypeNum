@@ -3,16 +3,14 @@
     using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
 
-    public struct Sum<T1, T2> : INumeral where T1 : struct, INumeral where T2 : struct, INumeral
+    public readonly struct Sum<T1, T2> : INumeral where T1 : struct, INumeral where T2 : struct, INumeral
     {
-        static readonly int num = checked(default(T1).Num + default(T2).Num);
-
-        public int Num => num;
+        public static int Num { get; } = checked(T1.Num + T2.Num);
 
         static Sum()
         {
-            int n2 = default(T2).Num;
-            int n1 = default(T1).Num;
+            int n2 = T2.Num;
+            int n1 = T1.Num;
             if (n1 <= n2)
                 throw new ArgumentException("Consistency: T1 must always be > T2. Swap them."
                     + $"\n{typeof(Sum<T1, T2>).Name}: {typeof(T1).Name}={n1},{typeof(T2).Name}={n2}");
@@ -25,9 +23,10 @@
                 throw new ArgumentException("Consistency: T2 must not be another Sum<X,Y>. Instead use Sum<Sum<T1, X>, Y>");
             if (t1.IsConstructedGenericType && t1.GetGenericTypeDefinition() == typeof(Sum<,>))
             {
-                foreach (var part in t1.GenericTypeArguments)
-                    if (((INumeral)Activator.CreateInstance(part)).Num <= n2)
+                foreach (var part in t1.GenericTypeArguments) {
+                    if (Numeral.GetNum(part) <= n2)
                         throw new ArgumentException("Consistency: in Sum<Sum<A, B>, C> A and B must each be > C");
+                }
             }
         }
     }
@@ -40,13 +39,13 @@
         public T1 Item1;
         public T2 Item2;
 
-        public int Num {
+        public static int Num {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => this.Item1.Num + this.Item2.Num;
+            get => T1.Num + T2.Num;
         }
 
         static Sum() {
-            default(Sum<T1, T2>).Num.GetHashCode();
+            Sum<T1, T2>.Num.GetHashCode();
         }
     }
 }

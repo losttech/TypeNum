@@ -6,7 +6,7 @@
     public class PowersOfTwoTests {
         [Fact]
         public void NumsAreCorrect() {
-            int num = default(N4096<int>).Num;
+            int num = N4096<int>.Num;
 
             Assert.Equal(expected: PowersOfTwo.Max, num);
         }
@@ -29,8 +29,8 @@
             {
                 string typeName = Invariant($"{ns}.N{n}");
                 var numeral = typeof(N0).Assembly.GetType(typeName);
-                var instance = (INumeral)Activator.CreateInstance(numeral);
-                Assert.Equal(instance.Num, n);
+                int num = Numeral.GetNum(numeral);
+                Assert.Equal(num, n);
             }
         }
     }

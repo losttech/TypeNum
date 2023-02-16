@@ -11,7 +11,7 @@
 
         [Fact]
         public void Sum0_Prohibited() {
-            Assert.Throws<TypeInitializationException>(() => default(Sum<int, N2<int>, N0<int>>).Num.GetHashCode());
+            Assert.Throws<TypeInitializationException>(() => Sum<int, N2<int>, N0<int>>.Num.GetHashCode());
         }
     }
 }

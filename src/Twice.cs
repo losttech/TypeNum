@@ -3,12 +3,10 @@
     using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
 
-    public struct Twice<T>: INumeral
+    public readonly struct Twice<T>: INumeral
         where T: struct, INumeral
     {
-        static readonly int num = checked(default(T).Num * 2);
-
-        public int Num => num;
+        public static int Num { get; } = checked(T.Num * 2);
 
         static Twice()
         {
@@ -25,9 +23,9 @@
         public TNum Item1;
         public TNum Item2;
 
-        public int Num {
+        public static int Num {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => this.Item1.Num * 2;
+            get => TNum.Num * 2;
         }
     }
 }

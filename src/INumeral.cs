@@ -1,10 +1,12 @@
 ﻿namespace TypeNum {
     using System;
+    using System.Reflection;
+
     public interface INumeral {
-        int Num { get; }
+        static abstract int Num { get; }
     }
 
-    public interface INumeral<T>: INumeral {
+    public interface INumeral<T> : INumeral {
     }
 
     public static class Numeral<T> where T : unmanaged {
@@ -25,6 +27,15 @@
                 pwr <<= 1;
             }
             return result;
+        }
+    }
+
+    public static class Numeral {
+        static int GetNum<T>() where T : INumeral => T.Num;
+        static readonly MethodInfo getNumGeneric = typeof(Numeral).GetMethod(nameof(GetNum), BindingFlags.Static | BindingFlags.NonPublic)!;
+        public static int GetNum(Type numeral) {
+            var getNum = getNumGeneric.MakeGenericMethod(numeral);
+            return (int)getNum.Invoke(null, null)!;
         }
     }
 }

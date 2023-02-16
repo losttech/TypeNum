@@ -101,7 +101,7 @@
         #endregion
 
         static FixedArray() {
-            ElementCount = default(TSize).Num;
+            ElementCount = TSize.Num;
         }
     }
 
@@ -128,7 +128,7 @@
 
             int len = collection.Count;
             var type = FixedArray<T>.GetType(len);
-            var result = (IList<T>)Activator.CreateInstance(type);
+            var result = (IList<T>)Activator.CreateInstance(type)!;
 
             GCHandle box;
             try {
@@ -154,7 +154,7 @@
                 box.Free();
             }
 
-            return (IList<T>)result;
+            return result;
         }
     }
 }
